@@ -50,6 +50,36 @@ async function handleRequest(
   const method = req.method || 'GET'
   const path = req.url || '/'
 
+  // Health check - no auth required
+  if (path === '/_health') {
+    const oauthOk = !!getAccessToken()
+    const status = oauthOk ? 200 : 503
+    res.writeHead(status, { 'Content-Type': 'application/json' })
+    res.end(JSON.stringify({
+      status: oauthOk ? 'ok' : 'degraded',
+      oauth: oauthOk ? 'valid' : 'expired/refreshing',
+      canonical_device: config.identity.device_id.slice(0, 8) + '...',
+      canonical_platform: config.env.platform,
+      upstream: config.upstream.url,
+      clients: config.auth.tokens.map(t => t.name),
+    }))
+    return
+  }
+
+  // Dry-run verification - shows what would be rewritten (auth required)
+  if (path === '/_verify') {
+    const clientName = authenticate(req)
+    if (!clientName) {
+      res.writeHead(401, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify({ error: 'Unauthorized' }))
+      return
+    }
+    const sample = buildVerificationPayload(config)
+    res.writeHead(200, { 'Content-Type': 'application/json' })
+    res.end(JSON.stringify(sample, null, 2))
+    return
+  }
+
   // Authenticate client (proxy-level auth)
   const clientName = authenticate(req)
   if (!clientName) {
@@ -136,4 +166,50 @@ async function handleRequest(
 
   proxyReq.write(body)
   proxyReq.end()
+}
+
+/**
+ * Build a sample payload showing what the rewriter produces.
+ * Used by /_verify endpoint for admin validation.
+ */
+function buildVerificationPayload(config: Config) {
+  // Simulate a /v1/messages request body
+  const sampleInput = {
+    metadata: {
+      user_id: JSON.stringify({
+        device_id: 'REAL_DEVICE_ID_FROM_CLIENT_abc123',
+        account_uuid: 'shared-account-uuid',
+        session_id: 'session-xxx',
+      }),
+    },
+    system: [
+      {
+        type: 'text',
+        text: `x-anthropic-billing-header: cc_version=2.1.81.a1b; cc_entrypoint=cli;`,
+      },
+      {
+        type: 'text',
+        text: `Here is useful information about the environment:\n<env>\nWorking directory: /home/bob/myproject\nPlatform: linux\nShell: bash\nOS Version: Linux 6.5.0-generic\n</env>`,
+      },
+    ],
+    messages: [{ role: 'user', content: 'hello' }],
+  }
+
+  const rewritten = JSON.parse(
+    rewriteBody(Buffer.from(JSON.stringify(sampleInput)), '/v1/messages', config).toString('utf-8'),
+  )
+
+  return {
+    _info: 'This shows how the gateway rewrites a sample request',
+    before: {
+      'metadata.user_id': JSON.parse(sampleInput.metadata.user_id),
+      system_prompt_env: sampleInput.system[1].text,
+      billing_header: sampleInput.system[0].text,
+    },
+    after: {
+      'metadata.user_id': JSON.parse(rewritten.metadata.user_id),
+      system_prompt_env: rewritten.system[1].text,
+      billing_header: rewritten.system[0].text,
+    },
+  }
 }
