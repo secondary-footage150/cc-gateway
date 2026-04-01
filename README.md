@@ -28,7 +28,7 @@
 
 > **Alpha** — This project is under active development. Test with a non-primary account first.
 
-> **Disclaimer** — This software is provided for security research and privacy auditing purposes. It is the user's responsibility to comply with applicable terms of service. The authors assume no liability for misuse.
+> **Disclaimer** — See [full disclaimer](#disclaimer) below.
 
 ## Why
 
@@ -207,6 +207,21 @@ This project builds on:
     </picture>
   </a>
 </div>
+
+## Disclaimer
+
+This project is for educational and research purposes only.
+It demonstrates API telemetry normalization at the proxy layer.
+
+- Do NOT use this to share accounts or violate Anthropic's Terms of Service
+- Do NOT use this for commercial purposes
+- The author is not responsible for any consequences of using this software
+- Use at your own risk
+
+This project was created by a paying Claude Code subscriber ($200/month)
+who was banned without explanation while using multiple personal devices.
+It exists because Anthropic's risk controls disproportionately affect
+non-US subscribers with no avenue for appeal.
 
 ## License
 
